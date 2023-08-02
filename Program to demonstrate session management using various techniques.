@@ -1,0 +1,68 @@
+const express = require('express');
+const cookieParser = require('cookie-parser');
+
+const app = express();
+app.use(cookieParser());
+
+app.get('/set-cookie', (req, res) => {
+  res.cookie('username', 'JohnDoe', { maxAge: 900000, httpOnly: true });
+  res.send('Cookie set!');
+});
+
+app.get('/get-cookie', (req, res) => {
+  const username = req.cookies.username;
+  res.send(`Username: ${username}`);
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
+});
+const express = require('express');
+const session = require('express-session');
+
+const app = express();
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false } // Change to true if using HTTPS
+}));
+
+app.get('/set-session', (req, res) => {
+  req.session.username = 'JohnDoe';
+  res.send('Session set!');
+});
+
+app.get('/get-session', (req, res) => {
+  const username = req.session.username;
+  res.send(`Username: ${username}`);
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
+});
+const express = require('express');
+const jwt = require('jsonwebtoken');
+
+const app = express();
+
+app.get('/generate-token', (req, res) => {
+  const token = jwt.sign({ username: 'JohnDoe' }, 'your-secret-key', { expiresIn: '1h' });
+  res.send(`Token: ${token}`);
+});
+
+app.get('/verify-token/:token', (req, res) => {
+  const token = req.params.token;
+  jwt.verify(token, 'your-secret-key', (err, decoded) => {
+    if (err) {
+      res.send('Invalid token.');
+    } else {
+      const username = decoded.username;
+      res.send(`Username: ${username}`);
+    }
+  });
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
+});

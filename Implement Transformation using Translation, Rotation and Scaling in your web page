@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformation Examples</title>
+    <style>
+        .transform-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 50px 0;
+        }
+
+        .transform-item {
+            width: 100px;
+            height: 100px;
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            line-height: 100px;
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .translate {
+            transform: translate(50px, 0);
+        }
+
+        .rotate {
+            transform: rotate(45deg);
+        }
+
+        .scale {
+            transform: scale(1.5);
+        }
+    </style>
+</head>
+<body>
+    <h1>Transformation Examples</h1>
+    <div class="transform-container">
+        <div class="transform-item translate">Translate</div>
+        <div class="transform-item rotate">Rotate</div>
+        <div class="transform-item scale">Scale</div>
+    </div>
+</body>
+</html>

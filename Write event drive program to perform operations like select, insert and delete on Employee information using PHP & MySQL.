@@ -1,0 +1,145 @@
+CREATE DATABASE employeedb;
+
+USE employeedb;
+
+CREATE TABLE employees (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    contact_no VARCHAR(15),
+    designation VARCHAR(50),
+    department VARCHAR(50),
+    salary DECIMAL(10,2)
+);
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Information</title>
+</head>
+<body>
+    <h2>Employee Information</h2>
+
+    <?php
+    $servername = "localhost";
+    $username = "your_username";
+    $password = "your_password";
+    $dbname = "employeedb";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Fetch all employees
+    $sql = "SELECT * FROM employees";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        echo "<table border='1'>";
+        echo "<tr><th>ID</th><th>First Name</th><th>Last Name</th><th>Contact No</th><th>Designation</th><th>Department</th><th>Salary</th><th>Action</th></tr>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>".$row['id']."</td>";
+            echo "<td>".$row['first_name']."</td>";
+            echo "<td>".$row['last_name']."</td>";
+            echo "<td>".$row['contact_no']."</td>";
+            echo "<td>".$row['designation']."</td>";
+            echo "<td>".$row['department']."</td>";
+            echo "<td>".$row['salary']."</td>";
+            echo "<td><a href='delete_employee.php?id=".$row['id']."'>Delete</a></td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "No employees found.";
+    }
+
+    $conn->close();
+    ?>
+
+    <h2>Add New Employee</h2>
+    <form action="add_employee.php" method="post">
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name" required><br>
+
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name" required><br>
+
+        <label for="contact_no">Contact No:</label>
+        <input type="text" id="contact_no" name="contact_no"><br>
+
+        <label for="designation">Designation:</label>
+        <input type="text" id="designation" name="designation"><br>
+
+        <label for="department">Department:</label>
+        <input type="text" id="department" name="department"><br>
+
+        <label for="salary">Salary:</label>
+        <input type="number" id="salary" name="salary" step="0.01"><br>
+
+        <input type="submit" value="Add Employee">
+    </form>
+</body>
+</html>
+
+<?php
+$servername = "localhost";
+$username = "your_username";
+$password = "your_password";
+$dbname = "employeedb";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $first_name = $_POST["first_name"];
+    $last_name = $_POST["last_name"];
+    $contact_no = $_POST["contact_no"];
+    $designation = $_POST["designation"];
+    $department = $_POST["department"];
+    $salary = $_POST["salary"];
+
+    $sql = "INSERT INTO employees (first_name, last_name, contact_no, designation, department, salary) VALUES ('$first_name', '$last_name', '$contact_no', '$designation', '$department', '$salary')";
+
+    if ($conn->query($sql) === TRUE) {
+        header("Location: index.php");
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+$conn->close();
+?>
+
+
+<?php
+$servername = "localhost";
+$username = "your_username";
+$password = "your_password";
+$dbname = "employeedb";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if (isset($_GET["id"])) {
+    $id = $_GET["id"];
+
+    $sql = "DELETE FROM employees WHERE id = $id";
+
+    if ($conn->query($sql) === TRUE) {
+        header("Location: index.php");
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+$conn->close();
+?>

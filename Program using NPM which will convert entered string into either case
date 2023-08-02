@@ -1,0 +1,28 @@
+mkdir string-converter
+cd string-converter
+npm init -y
+npm install yargs
+// app.js
+const yargs = require('yargs');
+
+yargs.command(
+    'uppercase <string>',
+    'Convert the string to uppercase',
+    {},
+    (argv) => {
+        const result = argv.string.toUpperCase();
+        console.log('Uppercase: ', result);
+    }
+);
+
+yargs.command(
+    'lowercase <string>',
+    'Convert the string to lowercase',
+    {},
+    (argv) => {
+        const result = argv.string.toLowerCase();
+        console.log('Lowercase: ', result);
+    }
+);
+
+yargs.parse();

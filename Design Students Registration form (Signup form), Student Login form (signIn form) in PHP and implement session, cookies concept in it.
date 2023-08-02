@@ -1,0 +1,115 @@
+a) Registration form consists (Student id, Student first
+& Surname, mobile No, Address…)
+b) Student Login form (Student Username, Password)
+c) Sign-out form (session destroy implementation)
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Registration Form</title>
+</head>
+<body>
+    <h2>Student Registration Form</h2>
+    <form action="register.php" method="post">
+        <label for="student_id">Student ID:</label>
+        <input type="text" id="student_id" name="student_id" required><br>
+
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name" required><br>
+
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name" required><br>
+
+        <label for="mobile_no">Mobile No:</label>
+        <input type="text" id="mobile_no" name="mobile_no" required><br>
+
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" required></textarea><br>
+
+        <input type="submit" value="Register">
+    </form>
+</body>
+</html>
+
+
+<?php
+session_start();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $student_id = $_POST["student_id"];
+    $first_name = $_POST["first_name"];
+    $last_name = $_POST["last_name"];
+    $mobile_no = $_POST["mobile_no"];
+    $address = $_POST["address"];
+
+    // Save the data to a database or file (not shown in this example)
+    // ...
+
+    // Store the student_id in a session
+    $_SESSION["student_id"] = $student_id;
+
+    // Set a cookie to remember the student_id for 1 hour
+    setcookie("student_id", $student_id, time() + 3600);
+
+    echo "Registration successful!";
+}
+?>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Login Form</title>
+</head>
+<body>
+    <h2>Student Login Form</h2>
+    <form action="login.php" method="post">
+        <label for="student_id">Student ID:</label>
+        <input type="text" id="student_id" name="student_id" required><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <input type="submit" value="Login">
+    </form>
+</body>
+</html>
+
+
+<?php
+session_start();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $student_id = $_POST["student_id"];
+    $password = $_POST["password"];
+
+    // Check the student_id and password in the database (not shown in this example)
+    // ...
+
+    // Simulate a successful login for demo purposes
+    if ($student_id == "123" && $password == "password") {
+        // Store the student_id in a session
+        $_SESSION["student_id"] = $student_id;
+
+        // Set a cookie to remember the student_id for 1 hour
+        setcookie("student_id", $student_id, time() + 3600);
+
+        echo "Login successful!";
+    } else {
+        echo "Invalid credentials. Please try again.";
+    }
+}
+?>
+
+
+<?php
+session_start();
+
+// Destroy the session and unset the cookie
+session_unset();
+session_destroy();
+setcookie("student_id", "", time() - 3600);
+
+echo "You have been signed out. <a href='login.html'>Login again</a>.";
+?>

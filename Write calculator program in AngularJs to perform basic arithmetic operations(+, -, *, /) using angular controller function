@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="calculatorApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Calculator</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body ng-controller="CalculatorController">
+    <h1>Basic Calculator</h1>
+    <input type="number" ng-model="operand1" placeholder="Enter Operand 1">
+    <select ng-model="operator">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+    </select>
+    <input type="number" ng-model="operand2" placeholder="Enter Operand 2">
+    <button ng-click="performOperation()">Calculate</button>
+    <p>Result: {{ result }}</p>
+</body>
+</html>
+
+// app.js
+angular.module('calculatorApp', [])
+    .controller('CalculatorController', function($scope) {
+        $scope.operand1 = 0;
+        $scope.operand2 = 0;
+        $scope.operator = '+';
+        $scope.result = 0;
+
+        $scope.performOperation = function() {
+            switch ($scope.operator) {
+                case '+':
+                    $scope.result = $scope.operand1 + $scope.operand2;
+                    break;
+                case '-':
+                    $scope.result = $scope.operand1 - $scope.operand2;
+                    break;
+                case '*':
+                    $scope.result = $scope.operand1 * $scope.operand2;
+                    break;
+                case '/':
+                    $scope.result = $scope.operand1 / $scope.operand2;
+                    break;
+            }
+        };
+    });

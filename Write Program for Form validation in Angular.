@@ -1,0 +1,91 @@
+ng new form-validation-example
+cd form-validation-example
+ng generate component my-form
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-my-form',
+  templateUrl: './my-form.component.html',
+  styleUrls: ['./my-form.component.css']
+})
+export class MyFormComponent {
+  myForm: FormGroup;
+
+  constructor(private formBuilder: FormBuilder) {
+    this.myForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      age: ['', [Validators.required, Validators.min(18)]],
+      agreeTerms: [false, Validators.requiredTrue],
+    });
+  }
+
+  submitForm() {
+    if (this.myForm.valid) {
+      console.log('Form submitted successfully!', this.myForm.value);
+    } else {
+      console.log('Please fill in all required fields correctly.');
+    }
+  }
+}
+<h1>Form Validation Example</h1>
+<form [formGroup]="myForm" (ngSubmit)="submitForm()">
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" formControlName="name">
+    <div *ngIf="myForm.get('name').invalid && myForm.get('name').touched">
+      Name is required.
+    </div>
+  </div>
+
+  <div>
+    <label for="email">Email:</label>
+    <input type="email" id="email" formControlName="email">
+    <div *ngIf="myForm.get('email').invalid && myForm.get('email').touched">
+      <div *ngIf="myForm.get('email').errors?.required">Email is required.</div>
+      <div *ngIf="myForm.get('email').errors?.email">Invalid email format.</div>
+    </div>
+  </div>
+
+  <div>
+    <label for="age">Age:</label>
+    <input type="number" id="age" formControlName="age">
+    <div *ngIf="myForm.get('age').invalid && myForm.get('age').touched">
+      <div *ngIf="myForm.get('age').errors?.required">Age is required.</div>
+      <div *ngIf="myForm.get('age').errors?.min">Age must be at least 18.</div>
+    </div>
+  </div>
+
+  <div>
+    <label>
+      <input type="checkbox" formControlName="agreeTerms">
+      I agree to the terms and conditions
+    </label>
+    <div *ngIf="myForm.get('agreeTerms').invalid && myForm.get('agreeTerms').touched">
+      You must agree to the terms and conditions.
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="myForm.invalid">Submit</button>
+</form>
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { AppComponent } from './app.component';
+import { MyFormComponent } from './my-form/my-form.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    MyFormComponent
+  ],
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

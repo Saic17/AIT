@@ -1,0 +1,80 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #f0f0f0;
+    line-height: 1.6;
+}
+
+h1 {
+    color: #008080;
+}
+
+p {
+    margin: 10px 0;
+}
+
+.container {
+    border: 1px solid #ccc;
+    padding: 20px;
+    background-color: #fff;
+    opacity: 0.9;
+    border-radius: 5px;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>External CSS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Hello, this is an external CSS example!</h1>
+        <p>This paragraph demonstrates the use of external styles.</p>
+    </div>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internal CSS</title>
+    <style>
+        body {
+            font-family: Verdana, Geneva, sans-serif;
+            color: #555;
+            background-color: #f9f9f9;
+            line-height: 1.7;
+        }
+
+        h1 {
+            color: #e68a00;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        .container {
+            border: 1px solid #999;
+            padding: 20px;
+            background-color: #fff;
+            opacity: 0.8;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hello, this is an internal CSS example!</h1>
+        <p>This paragraph demonstrates the use of internal styles.</p>
+    </div>
+</body>
+</html>

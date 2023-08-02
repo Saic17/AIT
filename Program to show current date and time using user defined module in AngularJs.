@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Date and Time</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+    <div ng-controller="DateTimeController">
+        <h1>Current Date and Time</h1>
+        <p>{{ currentDateTime }}</p>
+    </div>
+</body>
+</html>
+
+// app.js
+angular.module('myApp', [])
+    .controller('DateTimeController', function($scope) {
+        $scope.currentDateTime = new Date().toLocaleString();
+    });

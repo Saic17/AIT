@@ -1,0 +1,52 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-my-component',
+  template: `
+    <h2>Component Directive</h2>
+    <p>This is a component directive. You can use this component throughout your application.</p>
+  `,
+})
+export class MyComponentComponent {}
+import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+
+@Directive({
+  selector: '[appMyStructuralDirective]'
+})
+export class MyStructuralDirectiveDirective {
+  @Input('appMyStructuralDirective') count: number;
+
+  constructor(private templateRef: TemplateRef<any>, private viewContainer: ViewContainerRef) { }
+
+  ngOnInit() {
+    for (let i = 0; i < this.count; i++) {
+      this.viewContainer.createEmbeddedView(this.templateRef);
+    }
+  }
+}
+import { Directive, ElementRef } from '@angular/core';
+
+@Directive({
+  selector: '[appMyAttributeDirective]'
+})
+export class MyAttributeDirectiveDirective {
+  constructor(private el: ElementRef) {
+    el.nativeElement.style.backgroundColor = 'lightblue';
+    el.nativeElement.style.padding = '10px';
+    el.nativeElement.style.border = '1px solid blue';
+  }
+}
+<h1>Angular Directives Demo</h1>
+
+<app-my-component></app-my-component>
+
+<h2>Structural Directive</h2>
+<div *appMyStructuralDirective="5">
+  This is a structural directive. It repeats this block five times.
+</div>
+
+<h2>Attribute Directive</h2>
+<p appMyAttributeDirective>
+  This is an element with a custom attribute directive applied.
+</p>
+ng serve
